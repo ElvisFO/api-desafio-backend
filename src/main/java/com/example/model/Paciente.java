@@ -2,11 +2,33 @@ package com.example.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 @SuppressWarnings("serial")
+@Entity
+@Table(name = "PACIENTE")
 public class Paciente extends AbstractEntity<Long>{
 
+	@NotBlank
+	@Size(max = 255, min = 3)
+	@Column(nullable = false)
 	private String nome;
+	
+	@NotBlank
+	@Size(max = 255, min = 3)
+	@Column(nullable = false, unique = true)
 	private String cpf;
+	
+	@NotNull
+	@DateTimeFormat(iso = ISO.DATE)
+	@Column(name= "data_nascimento", nullable = false, columnDefinition = "DATE")
 	private LocalDate dataNascimento;
 
 	public Paciente() {
