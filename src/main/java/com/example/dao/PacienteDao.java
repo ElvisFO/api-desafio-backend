@@ -6,9 +6,9 @@ import com.example.model.Paciente;
 
 public interface PacienteDao {
 
-	void save(Paciente paciente);
+	Paciente save(Paciente paciente);
 
-    void update(Paciente paciente);
+	Paciente update(Paciente paciente);
 
     void delete(Long id);
 

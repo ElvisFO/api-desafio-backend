@@ -6,9 +6,9 @@ import com.example.model.Dispensacao;
 
 public interface DispensacaoDao {
 
-	void save(Dispensacao dispensacao);
+	Dispensacao save(Dispensacao dispensacao);
 
-    void update(Dispensacao dispensacao);
+	Dispensacao update(Dispensacao dispensacao);
 
     void delete(Long id);
 

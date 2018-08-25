@@ -17,14 +17,16 @@ public class AbstractDao <T, PK extends Serializable> {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	public void save(T entity) { 
+	public T save(T entity) { 
 
 		entityManager.persist(entity);
+		return entity;
 	}
 	
-	public void update(T entity) {
+	public T update(T entity) {
 		
 		entityManager.merge(entity);
+		return entity;
 	}
 	
 	public void delete(PK id) {

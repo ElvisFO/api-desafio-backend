@@ -6,9 +6,9 @@ import com.example.model.Prescricao;
 
 public interface PrescricaoDao {
 
-	void save(Prescricao prescricao);
+	Prescricao save(Prescricao prescricao);
 
-    void update(Prescricao prescricao);
+	Prescricao update(Prescricao prescricao);
 
     void delete(Long id);
 
