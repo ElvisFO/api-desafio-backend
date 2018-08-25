@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.event.ResourceCreateEvent;
 import com.example.model.Medicamento;
 import com.example.service.MedicamentoService;
 
@@ -25,6 +27,9 @@ public class MedicamentoResource {
 	
 	@Autowired
 	private MedicamentoService medicamentoService;
+	
+	@Autowired
+	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
 	public List<Medicamento> findAll()
@@ -43,6 +48,7 @@ public class MedicamentoResource {
 	public ResponseEntity<?> save(@Valid @RequestBody Medicamento medicamento, HttpServletResponse response)
 	{
 		Medicamento medicamentoSalvo = medicamentoService.save(medicamento);
+		publisher.publishEvent(new ResourceCreateEvent(this, response, medicamento.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(medicamentoSalvo);
 	}
 	
