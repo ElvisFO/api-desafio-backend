@@ -18,45 +18,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.event.ResourceCreateEvent;
-import com.example.model.Medicamento;
-import com.example.service.MedicamentoService;
+import com.example.model.Paciente;
+import com.example.service.PacienteService;
 
 @RestController
-@RequestMapping("/medicamentos")
-public class MedicamentoResource {
+@RequestMapping("/pacientes")
+public class PacienteResource {
 	
 	@Autowired
-	private MedicamentoService medicamentoService;
+	private PacienteService pacienteService;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
 	@GetMapping
-	public List<Medicamento> findAll()
+	public List<Paciente> findAll()
 	{
-		return medicamentoService.findAll();
+		return pacienteService.findAll();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findOne(@PathVariable Long id) 
 	{
-		Medicamento medicamento = medicamentoService.findById(id);
-		return medicamento != null ? ResponseEntity.ok(medicamento) : ResponseEntity.notFound().build();
+		Paciente paciente = pacienteService.findById(id);
+		return paciente != null ? ResponseEntity.ok(paciente) : ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> save(@Valid @RequestBody Medicamento medicamento, HttpServletResponse response)
+	public ResponseEntity<?> save(@Valid @RequestBody Paciente paciente, HttpServletResponse response)
 	{
-		Medicamento medicamentoSalvo = medicamentoService.save(medicamento);
-		publisher.publishEvent(new ResourceCreateEvent(this, response, medicamento.getId()));
-		return ResponseEntity.status(HttpStatus.CREATED).body(medicamentoSalvo);
+		Paciente pacienteSalvo = pacienteService.save(paciente);
+		publisher.publishEvent(new ResourceCreateEvent(this, response, paciente.getId()));
+		return ResponseEntity.status(HttpStatus.CREATED).body(pacienteSalvo);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Medicamento> update(@PathVariable Long id, @Valid @RequestBody Medicamento medicamento)
+	public ResponseEntity<Paciente> update(@PathVariable Long id, @Valid @RequestBody Paciente paciente)
 	{
-		Medicamento medicamentoSalvo = medicamentoService.update(id, medicamento);
-		return ResponseEntity.ok(medicamentoSalvo);
+		Paciente pacienteSalvo = pacienteService.update(id, paciente);
+		return ResponseEntity.ok(pacienteSalvo);
 	}
 
 }
