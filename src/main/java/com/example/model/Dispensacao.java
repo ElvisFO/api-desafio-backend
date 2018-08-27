@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -17,30 +16,28 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Entity
 @Table(name = "DISPENSACAO")
 public class Dispensacao extends AbstractEntity<Long>{
-	
+
 	@OneToOne
-	@JoinColumn(name="prescricao_id")
-	@MapsId
+	@JoinColumn(name="id_prescrica_fk")
 	private Prescricao prescricao;
 	
 	@OneToOne
-	@JoinColumn(name="medicamento_id")
-	@MapsId
+	@JoinColumn(name="id_medicamento_fk")
 	private Medicamento medicamento;
 	
 	@NotNull
 	@DateTimeFormat(iso = ISO.DATE)
-	@Column(name= "data_de_dispensacao", nullable = false, columnDefinition = "DATE")
-	private LocalDate data;
+	@Column(name= "data_dispensacao", nullable = false, columnDefinition = "DATE")
+	private LocalDate dataDispensacao;
 	
 	public Dispensacao() {
 		super();
 	}
 
-	public Dispensacao(Prescricao prescricao, Medicamento medicamento, LocalDate data) {
+	public Dispensacao(Prescricao prescricao, Medicamento medicamento, LocalDate dataDispensacao) {
 		this.prescricao = prescricao;
 		this.medicamento = medicamento;
-		this.data = data;
+		this.dataDispensacao = dataDispensacao;
 	}
 
 	public Prescricao getPrescricao() {
@@ -59,11 +56,11 @@ public class Dispensacao extends AbstractEntity<Long>{
 		this.medicamento = medicamento;
 	}
 
-	public LocalDate getData() {
-		return data;
+	public LocalDate getDataDispensacao() {
+		return dataDispensacao;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setDataDispensacao(LocalDate dataDispensacao) {
+		this.dataDispensacao = dataDispensacao;
 	}
 }

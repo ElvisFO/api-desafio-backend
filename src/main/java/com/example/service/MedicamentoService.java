@@ -50,8 +50,8 @@ public class MedicamentoService {
 	private void updateData(Medicamento medicamentoData, Medicamento medicamentoBody)
 	{
 		medicamentoData.setNome(medicamentoBody.getNome());
-		medicamentoData.setDispensacao(medicamentoBody.getDispensacao());
-		medicamentoData.setPrescricoes(medicamentoBody.getPrescricoes());
+		//medicamentoData.setDispensacao(medicamentoBody.getDispensacao());
+		//medicamentoData.setPrescricao(medicamentoBody.getPrescricao());
 	}
 	
 }

@@ -9,7 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -17,37 +17,45 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "PRESCRICAO")
+@Table(name = "prescricao")
 public class Prescricao extends AbstractEntity<Long>{
 
-	@NotNull
-	@Column(name= "paciente_id", nullable = false)
+	@OneToOne
+	@JoinColumn(name="id_paciente_fk")
 	private Paciente paciente;
+	
+	@OneToOne
+	@JoinColumn(name="id_medico_fk")
+	private Medico medico;
 	
 	@NotNull
 	@DateTimeFormat(iso = ISO.DATE)
-	@Column(name= "data_de_prescricao", nullable = false, columnDefinition = "DATE")
-	private LocalDate data;
+	@Column(name= "data_prescricao", nullable = false, columnDefinition = "DATE")
+	private LocalDate dataPrescricao;
 	
+	@JsonIgnore
 	@OneToOne(cascade= CascadeType.ALL, mappedBy="prescricao")
 	private Dispensacao dispensacao;
 	
-	@ManyToMany
-	@JoinTable(name="PRESCRICAO_MEDICAMENTO", 
-	joinColumns = @JoinColumn(name="prescricao_id"),
-	inverseJoinColumns = @JoinColumn(name="medicamento_id"))
+	@OneToMany
+	@JoinTable(name="prescricao_medicamento", 
+	joinColumns = @JoinColumn(name="id_prescrica_fk"),
+	inverseJoinColumns = @JoinColumn(name="id_medicamento_fk"))
 	private List<Medicamento> medicamentos = new ArrayList<>();
 	
 	public Prescricao() {
 		super();
 	}
 
-	public Prescricao(Paciente paciente, LocalDate data, Dispensacao dispensacao) {
+	public Prescricao(Paciente paciente, Medico medico, LocalDate dataPrescricao, Dispensacao dispensacao) {
 		super();
 		this.paciente = paciente;
-		this.data = data;
+		this.medico = medico;
+		this.dataPrescricao = dataPrescricao;
 		this.dispensacao = dispensacao;
 	}
 
@@ -59,12 +67,20 @@ public class Prescricao extends AbstractEntity<Long>{
 		this.paciente = paciente;
 	}
 
-	public LocalDate getData() {
-		return data;
+	public Medico getMedico() {
+		return medico;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
+
+	public LocalDate getDataPrescricao() {
+		return dataPrescricao;
+	}
+
+	public void setDataPrescricao(LocalDate dataPrescricao) {
+		this.dataPrescricao = dataPrescricao;
 	}
 
 	public Dispensacao getDispensacao() {

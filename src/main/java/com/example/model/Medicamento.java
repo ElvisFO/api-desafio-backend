@@ -1,20 +1,18 @@
 package com.example.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "MEDICAMENTO")
+@Table(name = "medicamento")
 public class Medicamento extends AbstractEntity<Long>{
 
 	@NotBlank
@@ -22,9 +20,11 @@ public class Medicamento extends AbstractEntity<Long>{
 	@Column(nullable = false)
 	private String nome;
 	
-	@ManyToMany(mappedBy="medicamentos")
-	private List<Prescricao> prescricoes = new ArrayList<>();
 	
+	//@OneToOne(cascade= CascadeType.ALL)
+	//private Prescricao prescricao;
+	
+	@JsonIgnore
 	@OneToOne(cascade= CascadeType.ALL, mappedBy="medicamento")
 	private Dispensacao dispensacao;
 	
@@ -35,6 +35,7 @@ public class Medicamento extends AbstractEntity<Long>{
 	public Medicamento(String nome, Dispensacao dispensacao) {
 		this.nome = nome;
 		this.dispensacao = dispensacao;
+		//this.prescricao = prescricao;
 	}
 
 	public String getNome() {
@@ -53,11 +54,11 @@ public class Medicamento extends AbstractEntity<Long>{
 		this.dispensacao = dispensacao;
 	}
 
-	public List<Prescricao> getPrescricoes() {
-		return prescricoes;
+	/*public Prescricao getPrescricao() {
+		return prescricao;
 	}
 
-	public void setPrescricoes(List<Prescricao> prescricoes) {
-		this.prescricoes = prescricoes;
-	}
+	public void setPrescricao(Prescricao prescricao) {
+		this.prescricao = prescricao;
+	}*/
 }
