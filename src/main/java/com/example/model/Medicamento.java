@@ -1,8 +1,12 @@
 package com.example.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -20,9 +24,9 @@ public class Medicamento extends AbstractEntity<Long>{
 	@Column(nullable = false)
 	private String nome;
 	
-	
-	//@OneToOne(cascade= CascadeType.ALL)
-	//private Prescricao prescricao;
+	@JsonIgnore
+	@ManyToMany(cascade= CascadeType.ALL, mappedBy="medicamentos")
+	private List<Prescricao> prescricoes = new ArrayList<>();
 	
 	@JsonIgnore
 	@OneToOne(cascade= CascadeType.ALL, mappedBy="medicamento")
@@ -54,11 +58,11 @@ public class Medicamento extends AbstractEntity<Long>{
 		this.dispensacao = dispensacao;
 	}
 
-	/*public Prescricao getPrescricao() {
-		return prescricao;
+	public List<Prescricao> getPrescricoes() {
+		return prescricoes;
 	}
 
-	public void setPrescricao(Prescricao prescricao) {
-		this.prescricao = prescricao;
-	}*/
+	public void setPrescricoes(List<Prescricao> prescricoes) {
+		this.prescricoes = prescricoes;
+	}
 }

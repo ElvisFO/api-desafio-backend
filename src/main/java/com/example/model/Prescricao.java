@@ -9,7 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -41,7 +41,7 @@ public class Prescricao extends AbstractEntity<Long>{
 	@OneToOne(cascade= CascadeType.ALL, mappedBy="prescricao")
 	private Dispensacao dispensacao;
 	
-	@OneToMany
+	@ManyToMany
 	@JoinTable(name="prescricao_medicamento", 
 	joinColumns = @JoinColumn(name="id_prescrica_fk"),
 	inverseJoinColumns = @JoinColumn(name="id_medicamento_fk"))

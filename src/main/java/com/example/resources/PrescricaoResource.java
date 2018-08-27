@@ -26,7 +26,7 @@ import com.example.service.PrescricaoService;
 public class PrescricaoResource {
 	
 	@Autowired
-	private PrescricaoService prescicoesService;
+	private PrescricaoService prescricoesService;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
@@ -34,20 +34,20 @@ public class PrescricaoResource {
 	@GetMapping
 	public List<Prescricao> findAll()
 	{
-		return prescicoesService.findAll();
+		return prescricoesService.findAll();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findOne(@PathVariable Long id) 
 	{
-		Prescricao prescricao = prescicoesService.findById(id);
+		Prescricao prescricao = prescricoesService.findById(id);
 		return prescricao != null ? ResponseEntity.ok(prescricao) : ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
 	public ResponseEntity<?> save(@Valid @RequestBody Prescricao prescricao, HttpServletResponse response)
 	{
-		Prescricao prescricaoSalva = prescicoesService.save(prescricao);
+		Prescricao prescricaoSalva = prescricoesService.save(prescricao);
 		publisher.publishEvent(new ResourceCreateEvent(this, response, prescricaoSalva.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(prescricaoSalva);
 	}
@@ -55,7 +55,7 @@ public class PrescricaoResource {
 	@PutMapping("/{id}")
 	public ResponseEntity<Prescricao> update(@PathVariable Long id, @Valid @RequestBody Prescricao prescricao)
 	{
-		Prescricao prescricaoSalva = prescicoesService.update(id, prescricao);
+		Prescricao prescricaoSalva = prescricoesService.update(id, prescricao);
 		return ResponseEntity.ok(prescricaoSalva);
 	}
 

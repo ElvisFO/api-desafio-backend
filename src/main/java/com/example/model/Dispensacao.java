@@ -7,14 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "DISPENSACAO")
+@Table(name = "dispensacao")
 public class Dispensacao extends AbstractEntity<Long>{
 
 	@OneToOne
@@ -25,9 +24,8 @@ public class Dispensacao extends AbstractEntity<Long>{
 	@JoinColumn(name="id_medicamento_fk")
 	private Medicamento medicamento;
 	
-	@NotNull
 	@DateTimeFormat(iso = ISO.DATE)
-	@Column(name= "data_dispensacao", nullable = false, columnDefinition = "DATE")
+	@Column(name= "data_dispensacao", columnDefinition = "DATE")
 	private LocalDate dataDispensacao;
 	
 	public Dispensacao() {

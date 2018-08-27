@@ -2,6 +2,7 @@ package com.example.dao;
 
 import java.util.List;
 
+
 import com.example.model.Dispensacao;
 
 public interface DispensacaoDao {
