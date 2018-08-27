@@ -5,6 +5,7 @@ import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,11 @@ public class MedicamentoService {
 	public Medicamento update(Long id, Medicamento medicamento)
 	{
 		Medicamento medicamentoData = medicamentoDao.findById(id);
+		
+		if(medicamentoData == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		
 		this.updateData(medicamentoData, medicamento);
 		return medicamentoDao.update(medicamentoData);
 	}
@@ -50,8 +56,6 @@ public class MedicamentoService {
 	private void updateData(Medicamento medicamentoData, Medicamento medicamentoBody)
 	{
 		medicamentoData.setNome(medicamentoBody.getNome());
-		//medicamentoData.setDispensacao(medicamentoBody.getDispensacao());
-		//medicamentoData.setPrescricao(medicamentoBody.getPrescricao());
 	}
 	
 }

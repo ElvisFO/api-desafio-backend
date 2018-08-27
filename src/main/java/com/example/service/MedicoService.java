@@ -3,6 +3,7 @@ package com.example.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,11 @@ public class MedicoService {
 	public Medico update(Long id, Medico medico)
 	{
 		Medico medicoData = medicoDao.findById(id);
+		
+		if(medicoData == null) {
+			throw new EmptyResultDataAccessException(1);
+		}
+		
 		this.updateData(medicoData, medico);
 		return medicoDao.update(medicoData);
 	}
